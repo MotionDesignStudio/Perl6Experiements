@@ -17,23 +17,37 @@ class fermatLastTheorem {
 	method checkValues (){
 		my $bool = True;
 		#printf "%s \n", "a = $!a b = $!b c = $!c n = $!n";
-		if $!a <3 || $!b <3 || $!n <3 { 
+		if $!a <2 || $!b <2 || $!n <2 { 
 			$bool=False; 
 			}
-		if $!c <4 { 
+		if $!c <2 { 
 			$bool=False; 
 		}
 		
 		return $bool;
 	}
+	
+	method checkTheorem (){
+		#return $!a**$!n +  $!b**$!n == $!c**$!n
+		#my $compA = $!a**$!n;
+		my ($compA, $compB ) = $!a**$!n, $!b**$!n;
+		return "$compA + $compB";
+	
+	}
 
 }
 
-my $testMe = fermatLastTheorem.new( a=>3, b=>3, c=>4, n=>3 );
+#my $testMe = fermatLastTheorem.new( a=>3, b=>3, c=>4, n=>3 );
 
 
-printf "%s \n", $testMe.checkValues();
+#printf "%s \n", $testMe.checkValues();
 
+#printf "%s \n", $testMe.checkTheorem();
+
+sub MAIN (Int $mya, Int $myb, Int $myc, Int $myn,){	
+	my $testMe = fermatLastTheorem.new( a=>$mya, b=>$myb, c=>$myc, n=>$myn );
+	printf "%s \n", $testMe.checkTheorem();
+}
 
 
 =begin comment

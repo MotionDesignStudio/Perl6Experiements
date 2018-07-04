@@ -9,17 +9,26 @@ class fibonacci {
 
 	my Int $nextValue;
 	
+	
 	method doCalculation (){
 	
 			for @arrayOfNumber -> $x {
-				#Exit loop 
+				#Exit loop
 				last if @arrayOfNumber.elems == $!lastNumInFib;
 				
 				$nextValue = $x + @arrayOfNumber[@arrayOfNumber.elems-1];
 				@arrayOfNumber.push: $nextValue;
 			}
-		say @arrayOfNumber;
+		self.displayReults;
 	}
+	
+	method displayReults(){
+		for @arrayOfNumber -> $x {
+			printf "%s ", $x;
+		}
+		printf "%s \n",""; # This is for a line break
+	}
+
 	
 }
 

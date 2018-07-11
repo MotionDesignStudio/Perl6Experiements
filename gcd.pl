@@ -48,7 +48,8 @@ sub MAIN ( *@numbers){
 	my $testMe = Euclidean_algorithm.new();
 	
 	if @numbers.elems >1 {
-		# Clean up array search for redundant numbers and place the largest number first
+		# Clean up array searching for redundant numbers and place the largest number first
+		# Placing the largest number first speeds up the computation of the Euclidean_algorithm
 		@numbers = @numbers.unique;
 		@numbers = @numbers.sort;
 		@numbers = @numbers.reverse;
@@ -59,16 +60,16 @@ sub MAIN ( *@numbers){
 		$storedGCM = $testMe.initMe();
 
 		for @numbers -> $varB {
+			#printf "%s \n", "VarB :: $varB";
 			$testMe.a=$storedGCM;
 			$testMe.b=$varB;
 			$storedGCM = $testMe.initMe();
-			# I must remove the first character of the array
-			@numbers.shift;
+			# Lopping over each value in the array if its size is longer than 2.
 		}
 
 		printf "%s \n", $storedGCM;
 	} else {
-		printf "%s \n", "You need a minimum of two numbers.";
+		printf "%s \n", "You need a minimum of two natural numbers.";
 	}
 }
 

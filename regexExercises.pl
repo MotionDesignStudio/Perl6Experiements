@@ -29,6 +29,12 @@ my Str $ex5 = "Match all the words of a string starting with a lowercase vowel :
 
 say "Match all the words of a string starting with a lowercase vowel amen :: ".match(/ <|w><[aeiou]>\w*<|w> /, :global); 
 
+say "Match all the words of a string starting with a lowercase vowel amen :: ".match(/ <|w><[aeiou]>\w* /, :global); 
+
+say "Match all the words of a string starting with a lowercase vowel amen :: ".match(/ << <[aeiou]>\w* >> /, :global);
+
+say "Match all the words of a string starting with a lowercase vowel :: ".words.grep: *.starts-with: any <a e i o u>;
+
 # <|w> starting word boundary
 # <[aeiou]> character class a,e,i,o,u this after <|w> mean any word starting with these letters
 # \w matches a single word character, i.e. a letter

@@ -33,7 +33,7 @@ say "Match all the words of a string starting with a lowercase vowel amen :: ".m
 
 say "Match all the words of a string starting with a lowercase vowel amen :: ".match(/ << <[aeiou]>\w* >> /, :global);
 
-say "Match all the words of a string starting with a lowercase vowel :: ".words.grep: *.starts-with: any <a e i o u>;
+say "Match all the words of a string starting with a lowercase vowel amen :: ".words.grep: *.starts-with: any <a e i o u>;
 
 # <|w> starting word boundary
 # <[aeiou]> character class a,e,i,o,u this after <|w> mean any word starting with these letters
@@ -47,4 +47,6 @@ say "Match all the words of a string starting with a lowercase vowel :: ".words.
 # https://docs.perl6.org/language/regexes#Character_classes
 # https://stackoverflow.com/questions/6233786/perl-regex-matching-vowels
 # https://www.perlmonks.org/?node_id=592867
-
+# https://www.perl.com/pub/2000/11/begperl3.html/
+# https://www.perlmonks.org/?node_id=944253
+# https://docs.perl6.org/language/regexes

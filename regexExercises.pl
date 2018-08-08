@@ -19,11 +19,26 @@ printf "%s \n", "The first word at the start of a string :: " ~ $/.prematch if $
 
 my Str $ex4 = "The first word not all that starts with alpabet letter 'a' :: ";
 
-#printf "%s \n", "The first word not all that start with alpabet letter 'a' :: "  if $ex4 ~~ / (a\w+) /;
-
 printf "%s \n", $ex4 ~ $ex4.match(/a\w+/, :global)[0];
+
+my Str $ex5 = "Match all the words of a string starting with a lowercase vowel :: ";
+
+#printf "%s \n", $ex5 ~ $ex5.match(/ <[aeiou]> <|w> <|w> \s /, :global);
+
+#say "Match all the words of a string starting with a lowercase vowel :: ".match(/ <[aeiou]><|w><|w>\s /, :global);
+
+say "Match all the words of a string starting with a lowercase vowel amen :: ".match(/ <|w><[aeiou]>\w*<|w> /, :global); 
+
+# <|w> starting word boundary
+# <[aeiou]> character class a,e,i,o,u this after <|w> mean any word starting with these letters
+# \w matches a single word character, i.e. a letter
+# * after \w means zero or more characters
+# <|w> means word boundary ending with a character or not
 
 # Importants Links
 # https://docs.perl6.org/language/regexes
 # say $/.prematch if 'Match the first word.' ~~ / \s /;
+# https://docs.perl6.org/language/regexes#Character_classes
+# https://stackoverflow.com/questions/6233786/perl-regex-matching-vowels
+# https://www.perlmonks.org/?node_id=592867
 

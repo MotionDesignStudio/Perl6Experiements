@@ -62,23 +62,60 @@ my $ex8 = "The first occurrence of a double letter (the same letter twice in a r
 
 printf "%s \n", $ex8 ~  $ex8.match( / :i(\w)$0+ /, :global)[0];
 
-#printf "%s \n", $ex8 ~~ m:i:g / (\w)$0+ / ;
+# (\w) means a word character, if you wanted any character in a language use . there insted
+# $0 mean go back into what was found in the (\w) and use that as the character next to it
+# + means 1 to inifinite repeation of the same character
 
 
-my $ex9 = "Christmas 2016-12-25. :: ";
+my $ex9 = "All occurrences of words with double letters twice in a row) bookkeeping see three morass :: ";
 
-printf "%s \n", $ex9 ~  $ex9.match( / (<[\d-]>+) /, :global);
+printf "%s \n", $ex9 ~  $ex9.match( / \w*(\w)$0+\w* /, :global);
+
+# \w* any character that is a letter the * means zero - infinity times
+# (\w) means a word character, if you wanted any character in a language use . there insted
+# $0 mean go back into what was found in the (\w) and use that as the character next to it
+# + means 1 to inifinite repeation of the same character
+# \w* any character that is a letter the * means zero - infinity times after finding occurance of the same letter
+
+my $ex10 = "The second occurrence of a double letter :: ";
+
+printf "%s \n", $ex10 ~  $ex10.match( / (\w)$0+ /, :global)[1];
+
+# (\w)$0+ this explained above will create a list of all the double letters found.  
+# You reference the second position of the list by using the [1]
+
+
+my $ex11 = "Christmas 2016-12-25. :: ";
+
+printf "%s \n", $ex11 ~  $ex11.match( / (<[\d-]>+) /, :global);
 
 # I must create a character class using ( )
-# < > inside of the is where I place my search it is necessary for a character to have this it must look like this (<>)
+# < > inside of the parentheses is where I place my search it is necessary for a character to have this it must look like this (<>)
 # \d means and numerical digit
 # - is the cracter I am searching for after any set of digits
 
-printf "%s \n", $ex9 ~  $ex9.match( / (<[\d-]> ** 10 ) /, :global);
+printf "%s \n", $ex11 ~  $ex11.match( / (<[\d-]> ** 10 ) /, :global);
 
 # the ** means search for a string with numbers and dashes - between them that is no shorter than 10 characters long
 
-printf "%s \n", $ex9 ~  $ex9.match( / ( \d **4 \- \d\d \- \d\d ) /, :global);
+printf "%s \n", $ex11 ~  $ex11.match( / ( \d **4 \- \d\d \- \d\d ) /, :global);
+
+my $v1 = $ex11 ~~ /(\d ** 4) \- (\d\d) \- (\d\d)/;
+
+printf "%s \n", $v1.prematch;
+printf "%s \n", $v1.postmatch;
+
+my $ex12 = "Christmas 4018 12, 30. :: ";
+
+my $yr = rx / \d **4..* <?{ $/ >=1900  }> /;
+my $mnth = rx / \d **2 <?{ 1 <= $/ <= 12 }> /;
+my $theday = rx / \d **2 <?{ 1 <= $/ <= 31 }> /;
+
+#printf "%s \n", $ex12 ~  $ex12.match( / (\d **4 \s \d\d \, \s \d\d) /, :global);
+
+printf "%s \n", $ex12 ~  $ex12.match( / ($yr \s $mnth \, \s $theday) /, :global);
+
+
 
 # This is a very descriptive match 
 # Because I am using a match I need t oplace them inside a ()
@@ -98,4 +135,5 @@ printf "%s \n", $ex9 ~  $ex9.match( / ( \d **4 \- \d\d \- \d\d ) /, :global);
 # https://docs.perl6.org/language/regexes
 # https://perldoc.perl.org/perlrecharclass.html
 # https://docs.perl6.org/routine/match
+# https://stackoverflow.com/questions/644714/what-regex-can-match-sequences-of-the-same-character
 

@@ -60,7 +60,31 @@ printf "%s \n", $ex7 ~  $ex7.match( / <|w>:i<[aeiou]>\w* /);
 
 my $ex8 = "The first occurrence of a double letter (the same letter twice in a row) bookkeeping see three morass :: ";
 
-printf "%s \n", $ex8 ~  $ex8.match( / :i\w\1+ /, :global);
+printf "%s \n", $ex8 ~  $ex8.match( / :i(\w)$0+ /, :global)[0];
+
+#printf "%s \n", $ex8 ~~ m:i:g / (\w)$0+ / ;
+
+
+my $ex9 = "Christmas 2016-12-25. :: ";
+
+printf "%s \n", $ex9 ~  $ex9.match( / (<[\d-]>+) /, :global);
+
+# I must create a character class using ( )
+# < > inside of the is where I place my search it is necessary for a character to have this it must look like this (<>)
+# \d means and numerical digit
+# - is the cracter I am searching for after any set of digits
+
+printf "%s \n", $ex9 ~  $ex9.match( / (<[\d-]> ** 10 ) /, :global);
+
+# the ** means search for a string with numbers and dashes - between them that is no shorter than 10 characters long
+
+printf "%s \n", $ex9 ~  $ex9.match( / ( \d **4 \- \d\d \- \d\d ) /, :global);
+
+# This is a very descriptive match 
+# Because I am using a match I need t oplace them inside a ()
+# \d means search for digits
+# **4 means four characters in length
+# \- escape and search for the -
 
 
 # Importants Links

@@ -108,17 +108,38 @@ printf "%s \n", $v1.postmatch;
 my $ex12 = "Christmas 4018 12, 30. :: ";
 
 my $yr = rx / \d **4..* <?{ $/ >=1900  }> /;
+
+# \d mean searching for a digit
+# **4..* means four or more digits in length that is never below 1000 less than infinity
+# <?{ $/ >=1900  }> thi si san ifthen state that checks my match to make sure the number is greater than or equal to 1900
+
 my $mnth = rx / \d **2 <?{ 1 <= $/ <= 12 }> /;
+
+# \d mean searching for a digit
+# **2 mean it has to be one - two digits in length
+# <?{ 1 <= $/ <= 12 }> this is an if then statement the number for a month must be greater than 0 less than 12 
+
 my $theday = rx / \d **2 <?{ 1 <= $/ <= 31 }> /;
 
 #printf "%s \n", $ex12 ~  $ex12.match( / (\d **4 \s \d\d \, \s \d\d) /, :global);
 
 printf "%s \n", $ex12 ~  $ex12.match( / ($yr \s $mnth \, \s $theday) /, :global);
 
+my $mnth2 = rx / 1<[0..2]> || 0<[1..9]> /;
+#my $theday2 = rx / 0<[1..9]> || 1<0..9]> || 2<[0..9]> || 3<[0..1]> /;
+
+my $theday2 = rx / 0<[1..9]> || 1<[0..9]> || 2<[0..9]> || 3<[0..1]> /;
+
+my $yr2 = rx / <[2..9]> <[0..9]><[0..9]> <[0..9]>   /;
+
+
+printf "%s \n", $ex12 ~  $ex12.match( / ( $yr2 \s $mnth2 \, \s $theday2) /, :global);
+
+#my $yr2 = rx //;
 
 
 # This is a very descriptive match 
-# Because I am using a match I need t oplace them inside a ()
+# Because I am using a match I need to place them inside a ()
 # \d means search for digits
 # **4 means four characters in length
 # \- escape and search for the -

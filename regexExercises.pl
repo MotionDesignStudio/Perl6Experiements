@@ -50,7 +50,7 @@ my $ex7 = "The first word Of a string starting with a vowel in either upper- Or 
 
 printf "%s \n", $ex7 ~  $ex7.match( / <|w>:i<[aeiou]>\w* /, :global)[0];
 
-# The :i outside the characte class means case insensative
+# The :i outside the character class means case insensative
 # .match creates an array of matches because of the :global it grab all it can find.  
 # [0] is the first position of the array
 
@@ -130,12 +130,22 @@ my $mnth2 = rx / 1<[0..2]> || 0<[1..9]> /;
 
 my $theday2 = rx / 0<[1..9]> || 1<[0..9]> || 2<[0..9]> || 3<[0..1]> /;
 
-my $yr2 = rx / <[2..9]> <[0..9]><[0..9]> <[0..9]>   /;
+my $yr2 = rx / <[1..9]> <[0..9]><[0..9]> <[0..9]>   /;
 
+# This solutions range is 1000 - 9999
 
 printf "%s \n", $ex12 ~  $ex12.match( / ( $yr2 \s $mnth2 \, \s $theday2) /, :global);
 
-#my $yr2 = rx //;
+my $ex13 = "This is an IPv4 address 192.168.1.222 it must have 4 sets of numbers ranging from 1 - 255  27.36.1.255 FAIL > 77 999.569.22.40 :: ";
+
+#my $myIP1 = rx /  ( [\d ** 1..3] <?{ $/ < 256}> \. ) ** 3  ( [\d ** 1..3] <?{ $/ < 256}> )  /;
+
+my $myIP1 = rx / \d ** 1..3 <?{ $/.Int < 256 && $/.Int >= 0 }>  /;
+
+
+#printf "%s \n", $ex13 ~  $ex13.match( / $myIP1 /, :global);
+
+say "27.36.1.255 FAIL > 77 999.569.22.40".match(/ \d ** 1..3 <?{ $/ < 256}> /, :global);
 
 
 # This is a very descriptive match 
@@ -157,4 +167,3 @@ printf "%s \n", $ex12 ~  $ex12.match( / ( $yr2 \s $mnth2 \, \s $theday2) /, :glo
 # https://perldoc.perl.org/perlrecharclass.html
 # https://docs.perl6.org/routine/match
 # https://stackoverflow.com/questions/644714/what-regex-can-match-sequences-of-the-same-character
-

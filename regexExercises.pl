@@ -62,7 +62,7 @@ my $ex8 = "The first occurrence of a double letter (the same letter twice in a r
 
 printf "%s \n", $ex8 ~  $ex8.match( / :i(\w)$0+ /, :global)[0];
 
-# (\w) means a word character, if you wanted any character in a language use . there insted
+# (\w) means a word character, if you wanted any character in a language use . there instead
 # $0 mean go back into what was found in the (\w) and use that as the character next to it
 # + means 1 to inifinite repeation of the same character
 
@@ -138,14 +138,26 @@ printf "%s \n", $ex12 ~  $ex12.match( / ( $yr2 \s $mnth2 \, \s $theday2) /, :glo
 
 my $ex13 = "This is an IPv4 address 192.168.1.222 it must have 4 sets of numbers ranging from 1 - 255  27.36.1.255 FAIL > 77 999.569.22.40 :: ";
 
-#my $myIP1 = rx /  ( [\d ** 1..3] <?{ $/ < 256}> \. ) ** 3  ( [\d ** 1..3] <?{ $/ < 256}> )  /;
 
-my $myIP1 = rx / \d ** 1..3 <?{ $/.Int < 256 && $/.Int >= 0 }>  /;
+my $myIP1 = rx / ( << \d+ >> ) ** 4 % '.' <?{ $0.all < 256}>  /;
+
+# () this creates a capture set, something I can compare a contain of my search
+# << >> are called word boundaries, so am searchung for a boundary of numbers
+# \d means and numerical character
+# # + means 1 to inifinite repeation of the same things being searched for
+# ** means search for this : ( << \d+ >> )  four times 
+# % % modifier to any of the above quantifiers to specify a separator that must occur between each of the matches.
+# For example, a+ % ',' will match a or a,a or a,a,a, etc.
+# % '.'  means search for a . between my four sets of numbers
+# $0.all this is a little confusing.  I know the $0 is the first found of an array of founs objects and all 
+# I think means every object in the array to be tested for less than 256 
 
 
-#printf "%s \n", $ex13 ~  $ex13.match( / $myIP1 /, :global);
+printf "%s \n", $ex13 ~  $ex13.match( / $myIP1 /, :global);
 
-say "27.36.1.255 FAIL > 77 999.569.22.40".match(/ \d ** 1..3 <?{ $/ < 256}> /, :global);
+
+#say "27.36.1.255 FAIL > 77 999.569.22.40".match(/ ( « \d+ » ) ** 4 % '.' <?{ $0.all < 256}> /, :global);
+
 
 
 # This is a very descriptive match 
@@ -156,6 +168,7 @@ say "27.36.1.255 FAIL > 77 999.569.22.40".match(/ \d ** 1..3 <?{ $/ < 256}> /, :
 
 
 # Importants Links
+# https://stackoverflow.com/questions/51230072/perl6-regex-match-conjunction
 # https://docs.perl6.org/language/regexes
 # say $/.prematch if 'Match the first word.' ~~ / \s /;
 # https://docs.perl6.org/language/regexes#Character_classes

@@ -155,16 +155,59 @@ my $myIP1 = rx / ( << \d+ >> ) ** 4 % '.' <?{ $0.all < 256}>  /;
 
 printf "%s \n", $ex13 ~  $ex13.match( / $myIP1 /, :global);
 
+my $ex14 = "27.36.1.255, 77, 999.569.22.40, 444.55.66.88, 99.87.78.90 and 192.168.1.266 :: ";
+
+my $ipv4 = rx / << \d  ** 1..3 >> <?{ $/ >=0 && $/ <= 256 }> /;
+
+printf "%s \n", $ex14 ~  $ex14.match( / $ipv4 ** 4 % "." /, :global);
+
+# This solution for searching for ipv makes more sense.
+# This << >> are the most importnat. This is a word bound and will stop the backtracking 
+# \d means any digit character
+# ** 1..3 means any number 1 - 3 units in length
+# <?{  }> This is an if then statment.
+# $/ is the variable that stores the found atom
+# >=0 && is the atrom or found number greater than or equal to 0
+# <255 is the atrom or found number less than or equal to 255
+
+my $ex15 = "abcdefg :: ";
+
+printf "%s \n", $ex15 ~ $ex15.subst( /c \w+ f/, "SUBST");
+
+# subst is a subroutine to substitue one string for another
+# /  / are the boundaryies of the regex
+# c means starting at this character
+# \w+ mean any letter character at least one to infinity
+# f is the last found atom in the regex 
+# this means starting at c one or more letter characters ending with f
+# "SUBST" is what will replace it
+
+my $ex16 = "abcdefg :: ";
+$ex16 ~~ s/ c \w+ f /SUBST/;
+printf "%s \n", $ex16 ;
+
+my $ex17 = "There can be twly two :: ";
+$ex17 ~~ s/tw/on/;
+printf "%s \n", $ex17;
+
+# Match the string literal tw
+# /on replace tw with on
+
+my $ex18 = "Xmas = 2016-12-25";
+$ex18 ~~ s/ (\d **4) \- (\d\d) \- (\d\d) / $2-$1-$0  /;
+printf "%s \n", $ex18;
+
+# (\d **4) means find a number four digits in length
+# (\d\d) means find a number 2 digits in length
+# \- escapes the -
+# the ( ) around the atom is important.  It groups them so I can refere to them with the $0, $1 and $2
+# $2 is the 3rd found atom that contains the day of the month
+# $1 is the 2nd found atom that contains the month
+# $0 is the 1st found atom that contains the year
+
 
 #say "27.36.1.255 FAIL > 77 999.569.22.40".match(/ ( « \d+ » ) ** 4 % '.' <?{ $0.all < 256}> /, :global);
 
-
-
-# This is a very descriptive match 
-# Because I am using a match I need to place them inside a ()
-# \d means search for digits
-# **4 means four characters in length
-# \- escape and search for the -
 
 
 # Importants Links

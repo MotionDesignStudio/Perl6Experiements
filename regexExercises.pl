@@ -205,6 +205,15 @@ printf "%s \n", $ex18;
 # $1 is the 2nd found atom that contains the month
 # $0 is the 1st found atom that contains the year
 
+my $ex19 = "foo bar bar foo bar";
+$ex19 ~~ s:g/bar/baz/;
+
+printf "%s \n", $ex19;
+
+# :g is called an adverb what it means is global and will search and replace all instances of the search and replace
+# bar is the string literal we are searching for
+# baz is the string literal being replaces
+
 
 #say "27.36.1.255 FAIL > 77 999.569.22.40".match(/ ( « \d+ » ) ** 4 % '.' <?{ $0.all < 256}> /, :global);
 

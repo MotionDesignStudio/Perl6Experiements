@@ -76,3 +76,6 @@ sub MAIN ( *@wordNnum ){
 # Test if two values were sent.  
 # Check the type
 # If the second value is empty decipher
+
+# LINKS 
+# https://www.perlmonks.org/?node_id=873068

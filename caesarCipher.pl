@@ -79,3 +79,4 @@ sub MAIN ( *@wordNnum ){
 
 # LINKS 
 # https://www.perlmonks.org/?node_id=873068
+# https://perl6advent.wordpress.com/2009/12/07/day-7-looping-for-fun-and-profit/

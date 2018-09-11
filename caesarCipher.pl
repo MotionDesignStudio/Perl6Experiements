@@ -60,14 +60,20 @@ class caesarCipher {
 
 sub MAIN ( *@wordNnum ){
 	
-	if @wordNnum.elems == 3 {
-		#printf "%s \n", "Enough Elements";
-		my $testMe = caesarCipher.new( m=>@wordNnum[0], num=>@wordNnum[1], encodeOrDecode=>@wordNnum[2] );
-		printf "%s \n", $testMe.initMe();
+	# Begin sanity check
+	if @wordNnum.elems == 3 { # Check is three parameters have been passed
+		if so @wordNnum[1].Numeric { # Check if the second parameter is a number			
+			my $testMe = caesarCipher.new( m=>@wordNnum[0], num=>@wordNnum[1], encodeOrDecode=>@wordNnum[2] );
+			printf "%s \n", $testMe.initMe();
+		}else{
+			printf "%s \n", "The second parameter must be a positive or negative whole number such as 13, 2 or 10 etc.";
+			printf "%s \n", "USAGE : ./caesarCipher.pl ibm -1 e   --OR --	./caesarCipher.pl ibm -1 d";
+		}
 	} else {
-		printf "%s \n", "Not Enough Elements";
+		printf "%s \n", "Not enough parameters passed or to many.";
 		printf "%s \n", "USAGE : ./caesarCipher.pl ibm -1 e   --OR --	./caesarCipher.pl ibm -1 d";
-	}
+	} 
+	# End sanity check
 }
 
 # USAGE :  ./caesarCipher.pl ibm -1 e   --OR --	./caesarCipher.pl ibm -1 d
@@ -80,3 +86,4 @@ sub MAIN ( *@wordNnum ){
 # LINKS 
 # https://www.perlmonks.org/?node_id=873068
 # https://perl6advent.wordpress.com/2009/12/07/day-7-looping-for-fun-and-profit/
+# https://rosettacode.org/wiki/Determine_if_a_string_is_numeric#Perl_6

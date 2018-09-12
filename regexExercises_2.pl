@@ -22,7 +22,7 @@ printf "%s \n", "$e1 3 Contains 'perl' " if $e1 ~~ /"pe rl"/;
 
 
 # Begin Crossword Puzzle Helper 
-
+=begin comment
 if  '/usr/share/dict/words'.IO.e {
 	for '/usr/share/dict/words'.IO.lines -> $word {
 		say $word if lc($word) ~~ / ^ .e.rl $ /;
@@ -48,15 +48,25 @@ if  '/usr/share/dict/words'.IO.e {
 } else {
 	printf "%s \n", "File does not exist";
 }
-
+=end comment
+# Delete this line =end comment and =begin comment above to see how the this crossword puzzle helper works
 # End Crossword Puzzle Helper 
 
 
-# Anchors explored
+my $e2="ab abbb aaaabbbbcc abbbbbbbbbcccccccc ababab :: ";
 
-my $e2="some words :: ";
+printf "%s \n", $e2 ~  $e2.match(/ a+ /, :global);
+# a is the string literal
+# + means one or more a
+printf "%s \n", $e2 ~  $e2.match(/ a[b+] /, :global);
+# a is the string litreral meaning only one a
+# b is the string literal
+# + means one or more b
+# [ ] is the atom
 
-#say $e2 ~~ /<?wb>/;
+printf "%s \n", $e2 ~  $e2.match(/ [ab]+ /, :global);
+# [ab] This atam contains the strings literal ab
+# the + outside the [ab] means one to inifinite recurences of ab
 
 #printf "%s \n", $e2 ~  $e2.match(/ !wb /, :global);
 

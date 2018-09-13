@@ -53,7 +53,7 @@ if  '/usr/share/dict/words'.IO.e {
 # End Crossword Puzzle Helper 
 
 
-my $e2="ab abbb aaaabbbbcc abbbbbbbbbcccccccc ababab :: ";
+my $e2="ab abbb aaaabbbbcc aabbbbbbbbbaaacccccccc ababab :: ";
 
 printf "%s \n", $e2 ~  $e2.match(/ a+ /, :global);
 # a is the string literal
@@ -68,10 +68,41 @@ printf "%s \n", $e2 ~  $e2.match(/ [ab]+ /, :global);
 # [ab] This atam contains the strings literal ab
 # the + outside the [ab] means one to inifinite recurences of ab
 
-#printf "%s \n", $e2 ~  $e2.match(/ !wb /, :global);
+# Regex Quantifiers
 
+printf "%s \n", $e2 ~  $e2.match(/ b ** 4 /, :global);
+# b is the string literal
+# ** 4 means match exactly 4 b's
+printf "%s \n", $e2 ~  $e2.match(/ a ** 2..4 /, :global);
+# a is the string literal
+# 2..4 means match a range of a's 2-4
+printf "%s \n", $e2 ~  $e2.match(/ b ** 2..* /, :global);
+# b is the string literal
+# ** 2..* means 2 - infinitity
 
+my $e3 = "Letters here 4,294,967,295.00 4,294,967 123.334.523 4,2.99 4,3.99.77,88 4,4.99,77  Words around :: ";
+printf "%s \n", $e3 ~  $e3.match(/ [\d+] ** 2..* % ',' /, :global);
+# [\d+] is an atom for any numerical character
+# ** 2..* % ',' means must have a minimum of two numbers one on each side of a comma ex. 4,2
 
+# Disjunction
+
+my $e4="aab :: ";
+printf "%s \n", $e4 ~  $e4.match(/ a+ | \w+ / );
+printf "%s \n", $e4 ~  $e4.match(/ a+ || \w+ / );
+
+my $e5="Up to 200 MB , 900  kB 1000 TB 2000TB :: ";
+
+printf "%s \n", $e5 ~  $e5.match( / \d+ <?before \s* <[kMGT]>? B  >   /, :global );
+# \d+ match 1 - inifinite characters that are digits
+# ?before before the kb, MB, Gb or TB
+# \s* means zero - infinite amounts of blank space
+# <[kMGT]> character class kMGT
+# B string literal
+# The character class kMGT before the srting literal B will test positive for
+# kB, MB, GB or TB
+
+#say "Letters here 4,294,967,295.00 4,294,967 123.334.523 4,2  Words around :: " ~~ m:global/ [\d+] ** 2..* % "," / ;
 
 
 

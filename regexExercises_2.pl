@@ -104,6 +104,19 @@ printf "%s \n", $e5 ~  $e5.match( / \d+ <?before \s* <[kMGT]>? B  >   /, :global
 
 #say "Letters here 4,294,967,295.00 4,294,967 123.334.523 4,2  Words around :: " ~~ m:global/ [\d+] ** 2..* % "," / ;
 
+my $e6 ="Phone numbers 52-14-54 917.234.5678, 1-526-553-1234, 1.917.123.4567 or FAIL > 1.2.2.212.355.75663  :: ";
+my $phonenumber = rx / \d* [<[.-]>]* [ << \d  ** 3..4 >> ] ** 3 % <[.-]> /;
+printf "%s \n", $e6 ~  $e6.match( / $phonenumber /, :global );
+# This is a reuse of a previous solution to find ip addreses
+# This << >> are the most importnat. This is a word bound and will stop the backtracking 
+# \d any digit character
+# ** 1..4 any number 1 - 4 units in length
+# [ ] This must be an atom for it to be quantifiable
+# ** 3..* must have a minimum of three numbers seperate by - or . ex 1.917.123 or 1-526-553
+# % is where I declare my delimiter
+# <[.-]> character class containing . and - either will match those between the phone numbers
+
+#  my $ipv4 = rx / << \d  ** 1..3 >> <?{ $/ >=0 && $/ <= 256 }> /;
 
 
 # Importants Links

@@ -1,3 +1,5 @@
+#!/opt/rakudo-pkg/bin/perl6
+
 #!/usr/bin/perl6
 
 
@@ -94,7 +96,7 @@ printf "%s \n", $e4 ~  $e4.match(/ a+ || \w+ / );
 my $e5="Up to 200 MB , 900  kB 1000 TB 2000TB :: ";
 
 printf "%s \n", $e5 ~  $e5.match( / \d+ <?before \s* <[kMGT]>? B  >   /, :global );
-# \d+ match 1 - inifinite characters that are digits
+# \d+ matches 1 - inifinite characters that are digits
 # ?before before the kb, MB, Gb or TB
 # \s* means zero - infinite amounts of blank space
 # <[kMGT]> character class kMGT
@@ -131,6 +133,33 @@ printf "%s \n", "Conjunction Example 1 : " ~ $e6 ~  $e6.match( / <$phonenumber> 
 # This will search the string literal within the properly formatted found telephone numbers
 
 printf "%s \n", "Conjunction Example 2 : " ~ $e6 ~  $e6.match( / <$phonenumber> & <-[9]>*  /, :global );
+
+# - will reject any of the phone numbers with a 9 in it.
+
+# Look Ahead Assertion
+
+my $e7 ="Numbers before category 100 200 MB 3000 kB 4000 GB 5000 TB :: ";
+
+my $numberfore1 = rx / \d+ <?before \s* <[kMGT]>? B >  /;
+printf "%s \n", "Look Ahead Assertion 1 : " ~ $e7~  $e7.match( / <$numberfore1> /, :global );
+
+# \d+ matches 1 - inifinite characters that are digits
+# <?before > everything after the number(s) is what we will exclude
+# \s* zero - infinite amounts of blank space
+# <[kMGT]> character class, matches kMG or T before the string literal B
+# ? zero or once of the characters within the character class
+# B is a string literal
+
+
+my $noNumBerfore = rx / << \d+ >> <!before \s* <[kMGT]>? B >  /;
+printf "%s \n", "Look Ahead Assertion 2 : " ~ $e7~  $e7.match( / <$noNumBerfore> /, :global );
+
+# << >> is a word bound to macth the entire number.  This prevent look behind and it testing
+# positive for 20, 300, 400 or 500
+# <!before > the ! mark match a number that is not followed by such a unit
+
+
+
 
 # EXTRA 
 

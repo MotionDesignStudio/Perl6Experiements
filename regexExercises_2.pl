@@ -1,7 +1,5 @@
-#!/opt/rakudo-pkg/bin/perl6
-
 #!/usr/bin/perl6
-
+#!/opt/rakudo-pkg/bin/perl6
 
 $_ = 3;
 my $d =3;
@@ -157,6 +155,26 @@ printf "%s \n", "Look Ahead Assertion 2 : " ~ $e7~  $e7.match( / <$noNumBerfore>
 # << >> is a word bound to macth the entire number.  This prevent look behind and it testing
 # positive for 20, 300, 400 or 500
 # <!before > the ! mark match a number that is not followed by such a unit
+
+
+my $e8 = "After commas 400,300 600,500 :: ";
+my $afterComma = rx / <?after \, > \d+  /;
+printf "%s \n", "Look Back Example 1 : " ~ $e8~  $e8.match( / <$afterComma> /, :global );
+
+# <?after finds things after the pattern
+# \ the slash allows me search for a comma literal
+# , this is a string literal 
+# \d+ matches 1 - inifinite characters that are digits
+
+my $afterCommaNegate = rx / <!after \, > << \d+ >>  /;
+printf "%s \n", "Look Back Example 2 With Negate : " ~ $e8~  $e8.match( / <$afterCommaNegate> /, :global );
+#  <!after the ! means return the values before the comma
+
+my $e9 = "If I had a hammer, I'd hammer in the morning :: ";
+my $findHammer = rx / h.mm\w*  /;
+
+printf "%s \n", "Find hammer : " ~ $e9~  $e9.match( / <$findHammer> /, :global );
+
 
 
 

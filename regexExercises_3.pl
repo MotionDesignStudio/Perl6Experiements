@@ -24,6 +24,8 @@ printf "%s \n", "Example 3 : " ~ ($e11 ~~  (m:g:i/  h.mm\w*  /)).join("|");
 
 printf "%s \n", "Example 4: " ~ ($e11 ~~  (m:g:i/  h.mm\w*  /)).elems;
 
+my $e12 = "1308 5th Avenue :: ";
+printf "%s \n", "Example 5 : " ~ $e12~  $e12.comb(/  \d+/  );
 
 
 my $e2="ab abbb aaaabbbbcc aabbbbbbbbbaaacccccccc ababab :: ";

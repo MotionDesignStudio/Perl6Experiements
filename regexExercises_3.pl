@@ -113,6 +113,14 @@ my $e19 = "I will multiple all numbers by 4 10 20 100 200 :: ";
 $e19~~ s:g[  \d+  ] = 4 * $/ ;
 printf "%s \n", "Example 14 : I will multiple all numbers by 4 10 20 100 200 :: $e19"  ;
 
+# $e19~~ replaces the values stored within the variable $e19
+# s shorthand for substitute
+# :g shorthand for :global search the entire string do not stop at the first found example
+# [ ] grouping
+# \d any numerical character
+# + 1 - inifinite
+# = will assign the compuation to the rigth to the regex on the left 
+# 4 * $/ 4 coefficient of the regex number that was found
 
 my $e20 = "Jump to Jump the left and then to the right again.  :: ";
 
@@ -120,12 +128,29 @@ $e20 ~~ s:g:i/ <?before Jump> /⇑ /;
 $e20 ~~ s:g:i/ <?before left> /← /;
 $e20 ~~ s:g:i/ <?after right> / →/;
 
+# $e20~~ replaces the values stored within the variable $e20
+# s shorthand for substitute
+# :g shorthand for :global search the entire string do not stop at the first found example
+# :i = caseinsensitive
+# / / / seperators for substituion
+# <?before > places the substition to the left of regex
+# Jump string leteral
+# ⇑ string literal and the blank space are treated as literal
+# <?after places the substition to the right of regex
 
 printf "%s \n", "Example 15 : Jump to Jump the left and then to the right again.  :: $e20";
 
 my $e21 = "Jump to Jump the left and then to the right again.  :: ";
 
 $e21 ~~ s:g:i/ << /← /;
+
+# $e21~~ replaces the values stored within the variable $e21
+# s shorthand for substitute
+# :g shorthand for :global search the entire string do not stop at the first found example
+# :i = caseinsensitive
+# / / / seperators for substituion
+# << matches all strings or characters with a space between and places the match to the left
+# ← string literal and the blank space are treated as literal
 
 printf "%s \n", "Example 16 : Jump to Jump the left and then to the right again.  :: $e21";
 
@@ -138,6 +163,9 @@ my $e23 = "Jump to Jump the left and then to the right again.  :: ";
 $e23 ~~ s:g:i/ << /→/;
 $e23 ~~ s:g:i/ >> /←/;
 
+# << matches all strings or characters with a space between and places the match to the left
+# >> matches all strings or characters with a space between and places the match to the right
+
 printf "%s \n", "Example 17 : Jump to Jump the left and then to the right again.  :: $e23";
 
 
@@ -145,14 +173,82 @@ my $e24 = "A file 75MB and 400GB each :: ";
 $e24 ~~ s:g:i/ \d+ <?before <[MG]> B> /500/;
 printf "%s \n", "Example 18 : A file 75MB and 400GB each ::  $e24";
 
+# $e24~~ replaces the values stored within the variable $e24
+# s shorthand for substitute
+# :g shorthand for :global search the entire string do not stop at the first found example
+# :i = caseinsensitive
+# / / / seperators for substituion
+# \d any numerical character
+# + 1 - inifinite
+# <?before > places the substition to the left of regex
+# <[ ]> this is a character class declaration
+# MG matches M or G before the B 
+# B is the string literal
+# 500 string literal will replace the numbers before the MB or GB
 
+my $e25 = "Hello, World";
+my $audience = "World";
+my $greeting = "Hello";
 
+if $e25 ~~ / $greeting ', ' $audience  / {
+	printf "%s \n", "Example 19 : Executed Stuff Here";
+}
 
+# $audience $greeting demonstrates how to store strings in variables used as regex
 
+# If you want to interpret the contents of a variable as a regex, you have to include it in angle brackets: 
+# Moritz Lenz-Parsing with Perl 6 Regexes and Grammars. A Recursive Descent into Parsing-Apress (2017)
 
+my $audience_2 = "\\w+";
+my $greeting_2 = "Hello";
 
+# \\ backslash introduces an escape sequence (such as \n for a newline, or \t for a tabulator)
 
+if $e25 ~~ / $greeting_2 ', ' <$audience_2>  / {
+	printf "%s \n", "Example 20 : Executed Stuff Here";
+}
 
+# <$audience_2> the < > interprets the contents of variable $audience_2 as a regex
+
+my @numArray = "one", "two", "three";
+my $rx_1 = /  @numArray /;
+
+# $rx_1 is equivalent $rx_2
+my $rx_2 = /  [ "one" | "two" | "three"]  /;
+
+my $counter_1 = 0;
+my $e26 = "How 10 many 20 numbers 30, 40 | 50 \ 60 / 70 & 80 :: ";
+
+if $e26 ~~ /  [ \d+ { $counter_1++ } \D*  ]+  / {
+	printf "%s \n", "Example 21 : $e26 $counter_1";
+}
+
+# [ ] regex cluster
+# \d any numerical character
+# + 1 - inifinite
+# { } anonymous function  declaration
+# $counter_1++ adds 1 to the variable $counter_1
+# \D matches a single character that is not a digit
+# * Zero or more
+
+my $e27 = / ^ \d ** 0..3 $ <?{ $/.Int <= 255 }>  / ;
+
+for 0, 100, 255, 256, 1000 -> $num_10 { 
+	#printf "%s \n", $num_10;
+	if $num_10 ~~ $e27 {
+		printf "%s \n", "Example 22 : $num_10";
+	}
+}
+
+# ^ line start with
+# \d any numerical character
+# ** 0..3 the numerical match must be in lengths of 1 to 3 charactes
+#  $ end of line match
+# <?{ ... }> You can use the form <?{ ... }> instead to influence the regex match. If the code
+# inside that block returns a false value, the match fails
+# $/ variable that stores the the found regex to the left
+# .Int converts value to number
+# <= 255 is the integer found less than or equal to 255
 
 
 

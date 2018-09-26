@@ -28,7 +28,7 @@ if $e29 ~~ /  (\d+) ** 4 % "."  /  {
 my $e30 = "Hello, World";
 
 if $e30 ~~ /  $<greeting_2>= [\w+] ", " $<audience_2>=[\w+]  / {
-	printf "%s \n ",  "Example 26 : greeting variable : " ~ $<greeting_2> ~ " | audience variable : " ~ $<audience_2>  ;
+	printf "%s \n",  "Example 26 : greeting variable : " ~ $<greeting_2> ~ " | audience variable : " ~ $<audience_2>  ;
 }
 
 
@@ -40,6 +40,9 @@ my regex e31 {  \d ** 1..3 <?{ $/.Int <= 255  }>  } ;
 	#}
 
 #}
+
+printf "%s \n", "Example 40 :: " ~ 50101.is-prime;
+
 
 
 my $e11 = "If I had a hammer, I'd hammer in the morning in my Hummer :: ";

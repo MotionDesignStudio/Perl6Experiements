@@ -1,5 +1,5 @@
-#!/opt/rakudo-pkg/bin/perl6
 #!/usr/bin/perl6
+#!/opt/rakudo-pkg/bin/perl6
 
 
 
@@ -34,34 +34,51 @@ if $e30 ~~ /  $<greeting_2>= [\w+] ", " $<audience_2>=[\w+]  / {
 
 my regex e31 {  \d ** 1..3 <?{ $/.Int <= 255  }>  } ;
 
-#if "127.0.0.1" ~~  /  ^ <e31> ** 4 % "." $  /{
-	#for $<e31>.list -> $byte {
-		#printf "%s \n", "Example 27 : " ~ $byte;
-	#}
+if "127.0.0.1" ~~  /  ^<e31> ** 4 % "." $  / {
+	for $<e31>.list -> $byte {
+		printf "%s \n", "Example 27 : " ~ $byte;
+	}
 
-#}
+}
 
-printf "%s \n", "Example 40 :: " ~ 50101.is-prime;
+my $e32 = "Hello, World";
+
+my regex word2 { \w+ };
+
+if $e32 ~~ / <greeting_3=word2> ", " <audience_3=word2>/ {
+	printf "%s \n", "Example 28 :  Greeting variable : " ~ $<greeting_3> ~ " | Audience : " ~ $<audience_3> ;
+}
 
 
-say "Example 41 :: ";
+# Backreferences
+
+printf "%s ", "Example 29 : Looking for duplicate duplicate words.  :: " ;
+printf "%s \n", "Looking for duplicate duplicate words. " ~~ / (\w+) \s+ $0 / ;
+
+printf "%s ", "Example 30 : Looking for same same words.  :: " ;
+printf "%s \n", "Looking for same same words. " ~~ / << $<repeatWord>=\w+ \s+ $<repeatWord> >> / ;
+
+printf "%s \n", "Example 31 :: " ~ 50101.is-prime;
+
+
+say "Example 32 :: ";
 say "abc" ~~ /../;
 
-say "Example 42 :: ";
+say "Example 33 :: ";
 say "abc" ~~ /.(.)(.)/;
 
-say "Example 43 :: ";
+say "Example 34 :: ";
 say "abc" ~~ /.(.(.))/;
 
-say "Example 44";
+say "Example 35";
 say "abc" ~~ / .(.$<char>=[.])  /;
 
-my $e32 = 'Amanda sighed.  "It was madness", she said. "Sheer madness" ::  ';
+my $e33 = 'Amanda sighed.  "It was madness", she said. "Sheer madness" ::  ';
 
-printf "%s \n", "Example 45 : " ~ $e32~  $e32.match(:global, / \" (.*?) \"  / ) ;
+printf "%s \n", "Example 36 : " ~ $e33~  $e33.match(:global, / \" (.*?) \"  / ) ;
 
 #if $e32 ~~ /  \" .* \"   / {
-	#printf "%s \n","Example 45 :: " ~  $/.Str;
+	#printf "%s \n","Example 37 :: " ~  $/.Str;
 
 #}
 

@@ -44,6 +44,29 @@ my regex e31 {  \d ** 1..3 <?{ $/.Int <= 255  }>  } ;
 printf "%s \n", "Example 40 :: " ~ 50101.is-prime;
 
 
+say "Example 41 :: ";
+say "abc" ~~ /../;
+
+say "Example 42 :: ";
+say "abc" ~~ /.(.)(.)/;
+
+say "Example 43 :: ";
+say "abc" ~~ /.(.(.))/;
+
+say "Example 44";
+say "abc" ~~ / .(.$<char>=[.])  /;
+
+my $e32 = 'Amanda sighed.  "It was madness", she said. "Sheer madness" ::  ';
+
+printf "%s \n", "Example 45 : " ~ $e32~  $e32.match(:global, / \" (.*?) \"  / ) ;
+
+#if $e32 ~~ /  \" .* \"   / {
+	#printf "%s \n","Example 45 :: " ~  $/.Str;
+
+#}
+
+
+
 
 my $e11 = "If I had a hammer, I'd hammer in the morning in my Hummer :: ";
 printf "%s \n", "Example 2 : " ~ $e11~  $e11.match(:global, /  h.mm\w*  / ).join("|");
@@ -292,6 +315,7 @@ for 0, 100, 255, 256, 1000 -> $num_10 {
 
 
 # Importants Links
+# https://stackoverflow.com/questions/171480/regex-grabbing-values-between-quotation-marks
 # https://docs.perl6.org/language/io
 # https://stackoverflow.com/questions/51230072/perl6-regex-match-conjunction
 # https://docs.perl6.org/language/regexes

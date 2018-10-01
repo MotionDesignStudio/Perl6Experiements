@@ -140,9 +140,8 @@ printf "%s \n", "Example 36 : " ~ $e33~  $e33.match(:global, / \" (.*?) \"  / ) 
 # :global searches the entire string and does not stop at the first find
 # \" allows me to search for the string literal "
 # ( ) these are called captures
-# . and character
+# . any character
 # * 0 - inifinite
-# ?
 # ? quantifier makes the preceding atom match zero or once
 # \" allows me to search for the string literal "
 
@@ -160,8 +159,40 @@ say "aaaaaa" ~~ / ^(:ratchet a+) { say "Example 39 : $0" } b /;
 my $e34 = "Look it is <a href='..:'> my link text </a> html. :: ";
 my $html-re = rx:ignorecase { '<' $<tag>= [ <[a..z]>+: ] <-[ > ]>*  '>' ( .* )  '</' $<tag> '>' };
 printf "%s ", "Example 40 : $e34";
-#printf "%s \n", $e34 ~~ $html-re ;
 say $e34 ~~ $html-re ;
+
+
+printf "%s ", "Example 41 : ";
+say "abcde" ~~ /  ab | a.*  /;
+printf "%s ", "Example 42 : ";
+say "abcde" ~~ /  ab | a {} .*  /;
+
+
+printf "%s ", "Example 43 : ";
+say "alongwordbeforeadot." ~~ / \w+ >> <?before \.>  /;
+
+# Match a balanced quoted string
+my $e35 = 'This has "quotes one", "quotes two" "this fails :: ';
+printf "%s \n", "Example 44 : " ~ $e35~  $e35.match(:global, /  \" <-["]>* \"  / );
+
+
+# Outputting string literal without having to escape special charaters
+say Q"Exmaple 45 : a\\b";
+
+my token mynum2 { \d+ };
+my rule sum { <mynum2> "+" <mynum2> };
+say "Exmaple 46 : ";
+say "1 + 2" ~~ / ^ <sum> $ /;
+
+
+
+
+
+
+
+
+
+
 
 
 

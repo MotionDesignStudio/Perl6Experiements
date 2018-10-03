@@ -2,6 +2,32 @@
 #!/opt/rakudo-pkg/bin/perl6
 
 
+grammar IPv4Address {
+	token byte { \d ** 1..3 <?{ $/.Int <= 255 }> } ;
+	token TOP { <byte> ** 4 % "." } ;
+}
+
+my $strOfIp = "127.0.0.1";
+
+if IPv4Address.parse( $strOfIp ) {
+	printf "%s ", "Example 47 : " ;
+	say join ", ", $<byte>.list;
+}
+ 
+say "Example 48 : " ~ IPv4Address.subparse( $strOfIp, :rule<byte>);
+printf "%s ", "Example 49 : " ;
+say IPv4Address.parse( $strOfIp, :rule<byte> );
+
+
+grammar StandardSQL {
+	regex TOP { 'SELECT' \s+ <name>  };
+	regex name { <indentifier> | <quoted_name>  };
+	regex quoted_name { \" <-["]>+ \"  };
+	regex indentifier { << <:alpha> \w* >> };
+}
+
+say StandardSQL.parse('SELECT salary');
+say StandardSQL.parse('SELECT "monthly salary"');
 
 
 if "Hello, World" ~~ /  (\w+) ", " (\w+) / {
